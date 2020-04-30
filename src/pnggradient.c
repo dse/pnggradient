@@ -251,8 +251,10 @@ void usage(void) {
     puts("    -H <int>    specify image height (default 256)");
     puts("    -c <color>  from color (default '#990000')");
     puts("    -C <color>  to color (default '#ff0000')");
+    puts("    -o          horizontal gradient (vertical by default)");
     puts("    -d          dither");
     puts("    -h, -?      display this message");
+    puts("<color> arguments can be hex '#rgb', '#rgba', '#rrggbb', or '#rrggbbaa'.");
 }
 
 unsigned long parse_color(char *arg, int *status) {
