@@ -33,9 +33,9 @@ to stdout.  Use `./-` to write to a file called `-`.
 
 ## Examples
 
--   ![basic example](example.png)
--   ![dithered](dithered.png)
--   ![red to blue](redblue.png)
--   ![alpha gradient](alpha.png)
--   ![horizontal gradient](horizontal.png)
--   ![horizontal red to blue](horizontal-redblue.png)
+-   ![basic example](examples/example.png)
+-   ![dithered](examples/dithered.png)
+-   ![red to blue](examples/redblue.png)
+-   ![alpha gradient](examples/alpha.png)
+-   ![horizontal gradient](examples/horizontal.png)
+-   ![horizontal red to blue](examples/horizontal-redblue.png)
