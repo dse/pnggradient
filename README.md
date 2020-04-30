@@ -39,3 +39,7 @@ to stdout.  Use `./-` to write to a file called `-`.
 -   ![alpha gradient](examples/alpha.png)
 -   ![horizontal gradient](examples/horizontal.png)
 -   ![horizontal red to blue](examples/horizontal-redblue.png)
+
+## Build Requirements
+
+Requires [libpng](http://libpng.org/pub/png/libpng.html) and any C compiler.
