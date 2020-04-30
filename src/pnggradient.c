@@ -25,7 +25,8 @@ static pnggradient_options_s pnggradient_defaults = {
     .height     = 256,
     .from_color = 0x990000ff,
     .to_color   = 0xff0000ff,
-    .dither     = 0
+    .dither     = 0,
+    .direction  = PNGGRADIENT_DIRECTION_VERTICAL
 };
 
 int main(int argc, char **argv) {
@@ -33,7 +34,7 @@ int main(int argc, char **argv) {
     char *filename = "pnggradient.png";
     int ch;
     int status;
-    while ((ch = getopt(argc, argv, "W:H:c:C:dh?")) != -1) {
+    while ((ch = getopt(argc, argv, "W:H:c:C:dho?")) != -1) {
         switch (ch) {
         case 'W':
             pnggradient_options.width = atoi(optarg);
@@ -57,6 +58,9 @@ int main(int argc, char **argv) {
             break;
         case 'd':
             pnggradient_options.dither = 1;
+            break;
+        case 'o':
+            pnggradient_options.direction = PNGGRADIENT_DIRECTION_HORIZONTAL;
             break;
         case 'h':
         case '?':
@@ -144,6 +148,7 @@ int pnggradient_generate(pnggradient_options_s pnggradient_options,
     int r1, g1, b1, a1;
     int r2, g2, b2, a2;
     int w, h;
+    int d;
 
     r1 = pnggradient_r(pnggradient_options.from_color);
     g1 = pnggradient_g(pnggradient_options.from_color);
@@ -155,13 +160,24 @@ int pnggradient_generate(pnggradient_options_s pnggradient_options,
     a2 = pnggradient_a(pnggradient_options.to_color);
     w = pnggradient_options.width;
     h = pnggradient_options.height;
+    d = pnggradient_options.direction;
 
     for (y = 0; y < h; y += 1) {
         for (x = 0; x < w; x += 1) {
-            rf = pnggradient_float_component(r1, r2, y, h);
-            gf = pnggradient_float_component(g1, g2, y, h);
-            bf = pnggradient_float_component(b1, b2, y, h);
-            af = pnggradient_float_component(a1, a2, y, h);
+            switch (d) {
+            case PNGGRADIENT_DIRECTION_HORIZONTAL:
+                rf = pnggradient_float_component(r1, r2, x, w);
+                gf = pnggradient_float_component(g1, g2, x, w);
+                bf = pnggradient_float_component(b1, b2, x, w);
+                af = pnggradient_float_component(a1, a2, x, w);
+                break;
+            default:
+                rf = pnggradient_float_component(r1, r2, y, h);
+                gf = pnggradient_float_component(g1, g2, y, h);
+                bf = pnggradient_float_component(b1, b2, y, h);
+                af = pnggradient_float_component(a1, a2, y, h);
+                break;
+            }
             if (pnggradient_options.dither) {
                 if (pnggradient_options.dither > 1) {
                     rf /= pnggradient_options.dither;

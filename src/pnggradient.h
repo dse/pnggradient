@@ -9,6 +9,7 @@ typedef struct pnggradient_options {
     unsigned long from_color;
     unsigned long to_color;
     int dither;
+    int direction;
 } pnggradient_options_s;
 
 int main(int argc, char **argv);
@@ -36,5 +37,8 @@ unsigned long parse_color(char *arg, int *status);
         ((height) < 2) ? (0.5 * ((from) + (to))) :                      \
         ((0.0 + (from) + 1.0 * ((to) - (from)) * (y) / ((height) - 1))) \
     )
+
+#define PNGGRADIENT_DIRECTION_HORIZONTAL 0
+#define PNGGRADIENT_DIRECTION_VERTICAL 1
 
 #endif
