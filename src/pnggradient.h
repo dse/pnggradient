@@ -10,6 +10,7 @@ typedef struct pnggradient_options {
     unsigned long to_color;
     int dither;
     int direction;
+    float grain;
 } pnggradient_options_s;
 
 int main(int argc, char **argv);

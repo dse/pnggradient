@@ -26,7 +26,8 @@ static pnggradient_options_s pnggradient_defaults = {
     .from_color = 0x990000ff,
     .to_color   = 0xff0000ff,
     .dither     = 0,
-    .direction  = PNGGRADIENT_DIRECTION_VERTICAL
+    .direction  = PNGGRADIENT_DIRECTION_VERTICAL,
+    .grain      = 0
 };
 
 int main(int argc, char **argv) {
@@ -34,7 +35,7 @@ int main(int argc, char **argv) {
     char *filename = "pnggradient.png";
     int ch;
     int status;
-    while ((ch = getopt(argc, argv, "W:H:c:C:dho?")) != -1) {
+    while ((ch = getopt(argc, argv, "W:H:c:C:dhog:?")) != -1) {
         switch (ch) {
         case 'W':
             pnggradient_options.width = atoi(optarg);
@@ -61,6 +62,9 @@ int main(int argc, char **argv) {
             break;
         case 'o':
             pnggradient_options.direction = PNGGRADIENT_DIRECTION_HORIZONTAL;
+            break;
+        case 'g':
+            pnggradient_options.grain = atof(optarg);
             break;
         case 'h':
         case '?':
@@ -205,6 +209,14 @@ int pnggradient_generate(pnggradient_options_s pnggradient_options,
                 b = pnggradient_component((int)(bf + 0.5));
                 a = pnggradient_component((int)(af + 0.5));
             }
+
+            if (pnggradient_options.grain) {
+                float amount = 1 + pnggradient_options.grain * (2.0 * rand() / RAND_MAX - 1.0);
+                r = (int)(0.5 + 1.0 * r * amount);
+                g = (int)(0.5 + 1.0 * g * amount);
+                b = (int)(0.5 + 1.0 * b * amount);
+            }
+
             row[x * 4] = r;
             row[x * 4 + 1] = g;
             row[x * 4 + 2] = b;
